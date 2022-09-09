@@ -1,0 +1,27 @@
+git init - создать гит репозиторий в текущей папке
+
+git clone <link> - склонировать репозиторий из ссылки
+
+git branch - посмотреть ветки в репозиотрии
+git checkout <branch> - перейти в ветку <branch> репозитория
+git switch <branch> - тоже самое
+
+git checkout -b <branch> - создать ветку <branch> в репозитории
+
+git status - посмотреть изменения файлов за которыми идёт слежка/которые не отслуживаются
+
+git add <name> - добавить в отслеживание файл <name>
+git add . - добавить в отслеживание все файлы репозитория
+
+git commit -m <name> "<commit>" - "закоммитить" изменения. Сохранить версию файла <name>. Текст коммита: <commit>
+git commit -m "<commit>" - тоже самое, только все добавленные файлы.
+git commit -a -m "<commit>" - как предыдущая, но можно будет пропустить команду "git add . "
+
+
+git remote add origin <link>
+
+git push -u origin <branch>
+
+git push --set-upstream origin <branch>
+
+git push
