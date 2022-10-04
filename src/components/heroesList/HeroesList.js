@@ -1,34 +1,39 @@
 import {useHttp} from '../../hooks/http.hook';
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { CSSTransition, TransitionGroup} from 'react-transition-group';
 
-import { heroesFetching, heroesFetched, heroesFetchingError } from '../../actions/actions';
+import { heroDeleted, fetchHeroes, selectHeroesByFilter } from './heroesSlice';
 import HeroesListItem from "../heroesListItem/HeroesListItem";
-// import Spinner from '../spinner/Spinner';
+import Spinner from '../spinner/Spinner';
+import ErrorMessage from '../errorMessage/ErrorMessage';
 
-// Задача для этого компонента:
-// При клике на "крестик" идет удаление персонажа из общего состояния
-// Усложненная задача:
-// Удаление идет и с json файла при помощи метода DELETE
+import './heroesList.scss';
+
 
 const HeroesList = () => {
-    const {heroes, heroesLoadingStatus} = useSelector(state => state);
+    const filteredHeroes = useSelector(selectHeroesByFilter)
+    const {heroesLoadingStatus} = useSelector(state => state.heroes);
     const dispatch = useDispatch();
     const {request} = useHttp();
 
     useEffect(() => {
-        dispatch(heroesFetching());
-        request("http://localhost:3001/heroes")
-            .then(data => dispatch(heroesFetched(data)))
-            .catch(() => dispatch(heroesFetchingError()))
-
+        dispatch(fetchHeroes());
         // eslint-disable-next-line
     }, []);
+    
+    const onDelete = useCallback((id) => { 
+        console.log('onDelete', id);
+        request(`http://localhost:3001/heroes/${id}`, 'DELETE')
+            .then(data => console.log(data, "delete"))
+            .then(dispatch(heroDeleted(id)))
+        // eslint-disable-next-line
+    }, [request]);
 
     if (heroesLoadingStatus === "loading") {
-        return <h3> dfsf</h3>;
+        return <Spinner/>;
     } else if (heroesLoadingStatus === "error") {
-        return <h5 className="text-center mt-5">Ошибка загрузки</h5>
+        return <ErrorMessage/>;
     }
 
     const renderHeroesList = (arr) => {
@@ -36,12 +41,28 @@ const HeroesList = () => {
             return <h5 className="text-center mt-5">Героев пока нет</h5>
         }
 
-        return arr.map(({id, ...props}) => {
-            return <HeroesListItem key={id} {...props}/>
-        })
+        return (
+            <TransitionGroup>
+                {arr.map(({id, ...props}) => {
+                    return (
+                        <CSSTransition
+                            key={id}
+                            timeout={500}
+                            classNames="item"
+                        >
+                            <HeroesListItem 
+                                {...props} 
+                                onDelete={() => onDelete(id)}/>
+                        
+                        </CSSTransition>
+                    ) 
+                })}
+            </TransitionGroup>
+            
+        )
     }
 
-    const elements = renderHeroesList(heroes);
+    const elements = renderHeroesList(filteredHeroes);
     return (
         <ul>
             {elements}

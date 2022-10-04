@@ -1,0 +1,10 @@
+.spinner {
+    display: flex;
+    margin: 50px auto;
+    justify-content: center;
+    z-index: 10;
+}
+
+.inner {
+    display: grid;
+}

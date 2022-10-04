@@ -1,23 +1,49 @@
 {
-    "heroes": [
-        {
-            "id": 1,
-            "name": "First hero",
-            "description": "The first hero in the ranking!",
-            "element": "fire"
-        },
-        {
-            "id": 2,
-            "name": "Nobody hero",
-            "description": "Hiding always anywhere",
-            "element": "wind"
-        },
-        {
-            "id": 3,
-            "name": "Sea hero",
-            "description": "Like Aquaman, but not from DC",
-            "element": "water"
-        }
-    ]
-        
+  "heroes": [
+    {
+      "id": "74015d0f-d3ac-4f38-8182-9a41f017fe76",
+      "name": "The first hero",
+      "description": "The first hero in the ranking!",
+      "element": "fire"
+    },
+    {
+      "id": "457daa7a-39d1-492f-afb4-36b6cc829239",
+      "name": "Sea hero",
+      "description": "Like Aquaman, but not from DC",
+      "element": "water"
+    },
+    {
+      "id": "7a69ec40-b1c9-467a-8b64-5d887f40fc97",
+      "name": "Unknown Hero",
+      "description": "Hiding always anywhere",
+      "element": "wind"
+    }
+  ],
+  "filter": [
+    {
+      "element": "all",
+      "label": "All",
+      "color": "#212529"
+    },
+    {
+      "element": "fire",
+      "label": "Fire",
+      "color": "#DC3545"
+    },
+    {
+      "element": "water",
+      "label": "Water",
+      "color": "#0D6efd"
+    },
+    {
+      "element": "wind",
+      "label": "Wind",
+      "color": "#198754"
+    },
+    {
+      "element": "earth",
+      "label": "Earth",
+      "color": "#6C757D"
+    }
+  ]
 }

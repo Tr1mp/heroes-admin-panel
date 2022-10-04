@@ -1,0 +1,23 @@
+.btn-closee {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    transform: translateX(-100%);
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    width: 1.8em;
+    height: 1.8em;
+    padding: 0.25em 0.25em;
+    color: #000;
+}
+
+.btn-closee::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 1.8em;
+    height: 1.8em; 
+    background: transparent url(../../../public/img/close.svg) center/1em auto no-repeat;
+}
