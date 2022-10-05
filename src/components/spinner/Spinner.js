@@ -2,14 +2,15 @@ import MoonLoader from "react-spinners/MoonLoader";
 
 import './spinner.scss';
 
-const Spinner = () => {
+const Spinner = ({size = 70, customStyle = null}) => {
     return(
-        <div className="spinner">
+        <div className="spinner"
+        style={{...customStyle}}>
             <div className="inner">
                 <MoonLoader
                     color="#000"
                     loading
-                    size={70}
+                    size={size}
                     speedMultiplier={0.5}
                 />
             </div>

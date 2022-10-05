@@ -6,9 +6,14 @@ const ErrorMessage = ({cusomStyle = null}) => {
             <img 
                 src={img} 
                 alt="Error"  
-                style={{display: "block", 
-                    width: "350px", height: "200px", 
-                    objectFit: "contain", margin: "30px auto 0 auto", ...cusomStyle}}/>
+                style={{
+                    display: "block", 
+                    width: "350px", 
+                    height: "200px", 
+                    objectFit: "contain", 
+                    margin: "30px auto 0 auto", 
+                    ...cusomStyle
+                }}/>
         </div>
     )
 }

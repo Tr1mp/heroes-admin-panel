@@ -12,6 +12,7 @@ const HeroesFilter = () => {
     const filtersList = useSelector(selectAll);
     const {activeFilter, filtersLoadingStatus} = useSelector(store => store.filters)
     const dispatch = useDispatch();
+
     useEffect(() => {
         dispatch(fetchFilters());
         // eslint-disable-next-line
@@ -25,7 +26,7 @@ const HeroesFilter = () => {
 
     const renderFilters = (arr) => {
         if (arr.length === 0) {
-            return <h5>no filter</h5>
+            return <h5>There are no filters for characters</h5>
         }
         
         return arr.map(({element, label, color}) => {

@@ -18,13 +18,16 @@ const HeroesListItem = ({name, description, element, onDelete}) => {
         default:
             elementClassName = 'bg-warning';
     }
+
     const changedDescription = description.length > 84
                 ? `${description.substr(0, 84)}...`
                 : description;
+
     const deleteItem = (e) => {
         e.currentTarget.disabled = true;
         onDelete()
     }
+
     return(
         <>
             <li className={`card flex-row mb-4 shadow-lg text-white bg-gradient ${elementClassName}`}>
@@ -35,14 +38,16 @@ const HeroesListItem = ({name, description, element, onDelete}) => {
                 />
                 <div className="card-body">
                     <h3 className="card-title">{name}</h3>
-                    <p className="card-text text-wrap" style={{width: "386px", height: "42px"}}>{changedDescription}</p>
+                    <p className="card-text text-wrap" 
+                        style={{width: "386px", height: "42px"}}>
+                            {changedDescription}
+                    </p>
                 </div>
-                    <button 
-                        className='btn-closee'
-                        aria-label="Close"
-                        onClick={deleteItem}
-                        >
-                    </button>
+                <button 
+                    className='btn-closee'
+                    aria-label="Close"
+                    onClick={deleteItem}>
+                </button>
             </li>
         </>
     )

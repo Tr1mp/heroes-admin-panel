@@ -1,38 +1,44 @@
-import {useHttp} from '../../hooks/http.hook';
-import { useEffect, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useCallback, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { CSSTransition, TransitionGroup} from 'react-transition-group';
 
-import { heroDeleted, fetchHeroes, selectHeroesByFilter } from './heroesSlice';
 import HeroesListItem from "../heroesListItem/HeroesListItem";
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
+import { useGetHeroesQuery, useDeleteHeroMutation } from '../../api/apiSlice';
 
 import './heroesList.scss';
 
-
 const HeroesList = () => {
-    const filteredHeroes = useSelector(selectHeroesByFilter)
-    const {heroesLoadingStatus} = useSelector(state => state.heroes);
-    const dispatch = useDispatch();
-    const {request} = useHttp();
-
-    useEffect(() => {
-        dispatch(fetchHeroes());
-        // eslint-disable-next-line
-    }, []);
+    const [deleteHero] = useDeleteHeroMutation();
+    const activeFilter = useSelector(state => state.filters.activeFilter);
+    
+    const {
+        data: heroes = [],
+        isLoading,
+        isError
+    } = useGetHeroesQuery();
     
     const onDelete = useCallback((id) => { 
-        console.log('onDelete', id);
-        request(`http://localhost:3001/heroes/${id}`, 'DELETE')
-            .then(data => console.log(data, "delete"))
-            .then(dispatch(heroDeleted(id)))
+        deleteHero(id);
         // eslint-disable-next-line
-    }, [request]);
+    }, []);
 
-    if (heroesLoadingStatus === "loading") {
+    const filteredHeroes = useMemo(() => {
+        const filteredHeroes = heroes.slice();
+
+        if (activeFilter === 'all') {
+            window.pageYOffset = 0;
+            return filteredHeroes;
+        } else {
+            return filteredHeroes.filter(item => item.element === activeFilter);
+        }
+    }, [heroes, activeFilter]);
+
+
+    if (isLoading) {
         return <Spinner/>;
-    } else if (heroesLoadingStatus === "error") {
+    } else if (isError) {
         return <ErrorMessage/>;
     }
 
@@ -53,12 +59,10 @@ const HeroesList = () => {
                             <HeroesListItem 
                                 {...props} 
                                 onDelete={() => onDelete(id)}/>
-                        
                         </CSSTransition>
-                    ) 
+                    )
                 })}
             </TransitionGroup>
-            
         )
     }
 

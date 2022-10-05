@@ -2,6 +2,7 @@
     margin: -10px 0 15px 0;
     color: red;
     font-size: 16px;
+
     &-outline {
         border: solid 1px red;
     }
@@ -34,9 +35,16 @@
         height: 32px;
         margin: 5px 0 15px 0;
         outline: none;
+        font-size: 14px;
+
         &-high {
             height: 130px;
         }
+
+        &::placeholder {
+            font-size: 14px;
+        }
+        
     }
 
     &-label {
@@ -52,6 +60,7 @@
         border: none;
         border-radius: 5px;
     }
+    
     &-error {
         color: red;
     }
